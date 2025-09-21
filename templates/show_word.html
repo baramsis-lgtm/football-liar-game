@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제시어 확인</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1f2937 0%, #0c0a09 100%);
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .card {
+            background-color: #262626;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            padding: 3rem;
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid #4a5568;
+        }
+        .player-info {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #9ca3af;
+        }
+        .word-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fca311;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a1a;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            word-break: keep-all;
+            text-shadow: 0 0 10px rgba(252, 163, 17, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .word-display:hover {
+            transform: scale(1.02);
+        }
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            background-color: #fca311;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(252, 163, 17, 0.4);
+        }
+        .btn:hover {
+            background-color: #f8b449;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(252, 163, 17, 0.6);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <p class="player-info">{{ current_player }}번째 선수 차례입니다.</p>
+        
+        <!-- 제시어를 숨기기 위한 새로운 래퍼와 버튼 -->
+        <div id="word-container">
+            <div class="word-display hidden" id="word">{{ displayed_text }}</div>
+            <button onclick="showWord()" class="btn" id="show-word-btn">
+                제시어 확인하기
+            </button>
+        </div>
+
+        <form id="next-player-form" action="{{ url_for('next_player') }}" method="post" class="hidden">
+            <button type="submit" class="btn">다음 선수에게 넘기기</button>
+        </form>
+    </div>
+
+    <script>
+        function showWord() {
+            // 제시어를 보여주고, 확인 버튼을 숨깁니다.
+            document.getElementById('word').classList.remove('hidden');
+            document.getElementById('show-word-btn').classList.add('hidden');
+            
+            // "다음 선수에게 넘기기" 버튼을 보여줍니다.
+            document.getElementById('next-player-form').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

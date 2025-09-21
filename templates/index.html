@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>축구 라이어 게임</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1f2937 0%, #0c0a09 100%);
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #262626;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            padding: 2.5rem;
+            text-align: center;
+            border: 2px solid #4a5568;
+        }
+        h1 {
+            background-color: #1a1a1a;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fca311;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #d1d5db;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #3f3f46;
+            border: 1px solid #52525b;
+            border-radius: 0.5rem;
+            color: #e5e7eb;
+            font-size: 1rem;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #fca311;
+            box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.5);
+        }
+        .form-group select option {
+            background-color: #3f3f46;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            background-color: #fca311;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(252, 163, 17, 0.4);
+        }
+        .btn-primary:hover {
+            background-color: #f8b449;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(252, 163, 17, 0.6);
+        }
+        .error-message {
+            color: #ef4444;
+            background-color: #fecaca;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            border: 1px solid #dc2626;
+        }
+        .legend-era {
+            display: none; /* JavaScript로 보여줄 예정 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>축구 라이어 게임</h1>
+
+        {% if error_message %}
+            <div class="error-message mb-4">{{ error_message }}</div>
+        {% endif %}
+
+        <!--
+            Flask 서버로 데이터를 보내려면 form 태그에 method="post"를 명시해야 합니다.
+            이 부분이 누락되면 GET 요청만 전송되어 다음 페이지로 넘어가지 않습니다.
+        -->
+        <form action="/" method="post" id="game-settings-form">
+            <div class="form-group">
+                <label for="category">카테고리 선택:</label>
+                <select id="category" name="category" required onchange="toggleLegendEra()">
+                    <option value="현역선수">현역 선수</option>
+                    <option value="레전드">레전드</option>
+                    <option value="클럽">클럽</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="difficulty">난이도 선택:</label>
+                <select id="difficulty" name="difficulty" required>
+                    <option value="축알못">축알못 (쉬움)</option>
+                    <option value="축잘알">축잘알 (보통)</option>
+                    <option value="축신">축신 (어려움)</option>
+                </select>
+            </div>
+
+            <div class="form-group legend-era" id="legend-era-container">
+                <label for="legend_era">레전드 활동 시기:</label>
+                <select id="legend_era" name="legend_era">
+                    <option value="">시기 전체</option>
+                    <option value="80s이전">80년대 이전</option>
+                    <option value="90s">90년대</option>
+                    <option value="2000s">2000년대</option>
+                    <option value="2010s">2010년대</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="num_players">인원수 (2 ~ 6명):</label>
+                <input type="number" id="num_players" name="num_players" min="2" max="6" value="4" required>
+            </div>
+
+            <button type="submit" class="btn-primary">게임 시작</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleLegendEra() {
+            const category = document.getElementById('category').value;
+            const legendEraContainer = document.getElementById('legend-era-container');
+            if (category === '레전드') {
+                legendEraContainer.style.display = 'block';
+            } else {
+                legendEraContainer.style.display = 'none';
+            }
+        }
+        
+        // 페이지 로드 시 초기 상태 설정
+        window.onload = toggleLegendEra;
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임 시작</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1f2937 0%, #0c0a09 100%);
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .card {
+            background-color: #262626;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            padding: 3rem;
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid #4a5568;
+        }
+        .icon {
+            font-size: 4rem;
+            color: #fca311;
+            margin-bottom: 1rem;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-5%); }
+            50% { transform: translateY(0); }
+        }
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fca311;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .btn-home {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            background-color: #fca311;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(252, 163, 17, 0.4);
+        }
+        .btn-home:hover {
+            background-color: #f8b449;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(252, 163, 17, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">⚽</div>
+        <h2>게임 시작!</h2>
+        <p>이제부터 자유롭게 서로에게 질문하며 라이어를 찾아내세요.</p>
+        <p>토론이 끝나면, 모두가 지목한 한 명이 라이어인지 확인합니다.</p>
+        <a href="{{ url_for('home') }}" class="btn-home">메인 화면으로 돌아가기</a>
+    </div>
+</body>
+</html>
